@@ -96,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
                         adapter.adicionarLista(t);
                     }
                 }
-
                 @Override
                 public void onFailure(Call<List<Trending>> call, Throwable t) {
                     Log.e(TagNet, "Network Failure " + t.getMessage());
@@ -115,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
                         adapter.adicionarLista(t);
                     }
                 }
-
                 @Override
                 public void onFailure(Call<List<Trending>> call, Throwable t) {
                     Log.e(TagNet, "Network Failure " + t.getMessage());
@@ -134,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
                         adapter.adicionarLista(t);
                     }
                 }
-
                 @Override
                 public void onFailure(Call<List<Trending>> call, Throwable t) {
                     Log.e(TagNet, "Network Failure " + t.getMessage());
