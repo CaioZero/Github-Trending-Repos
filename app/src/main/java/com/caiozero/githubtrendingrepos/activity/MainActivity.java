@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Bundle bundle = getIntent().getExtras();
+
+        /*Get option if the requested mode it`s daily, weekly or monthly*/
         try {
             String option = bundle.getString("Op");
             if (option.equalsIgnoreCase("Daily")) {

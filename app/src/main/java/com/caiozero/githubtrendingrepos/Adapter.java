@@ -74,7 +74,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
         intent.putExtra("Url",t.getUrl());
 
         Toast.makeText(context,"For more Details, click on Icon",Toast.LENGTH_SHORT).show();
-        /*Feito isso, basta dar o start nesse objeto, que agora eh a outra activity*/
         context.startActivity(intent);
             }
         });

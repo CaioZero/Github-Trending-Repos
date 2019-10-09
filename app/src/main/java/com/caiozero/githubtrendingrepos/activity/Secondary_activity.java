@@ -34,6 +34,7 @@ public class Secondary_activity extends AppCompatActivity {
         urlAvatar = findViewById(R.id.imageButton);
 
        Bundle dados = getIntent().getExtras();
+       /*Getting data by Call*/
        String autorIntent = dados.getString("Autor");
        String nameIntent = dados.getString("Name");
        String starsIntent = dados.getString("Stars");
@@ -41,11 +42,12 @@ public class Secondary_activity extends AppCompatActivity {
        String avatar = dados.getString("Avatar");
        final String url = dados.getString("Url");
 
-        Glide.with(getApplicationContext())
-                .load(avatar)
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(urlAvatar);
+       /*Object Glide to get avatar and load on imageButton*/
+       Glide.with(getApplicationContext())
+           .load(avatar)
+           .centerCrop()
+           .diskCacheStrategy(DiskCacheStrategy.ALL)
+           .into(urlAvatar);
 
        autor.setText("Author: "+autorIntent);
        name.setText("Repository name: "+nameIntent);
