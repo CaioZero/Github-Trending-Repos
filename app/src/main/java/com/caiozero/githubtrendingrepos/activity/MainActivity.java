@@ -27,8 +27,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String Tag = "GIT_ERRO";
-
+    public static final String TagApi = "API_ERROR";
+    public static final String TagNet = "NET_ERROR";
+    public static final String TagErro = "ERROR";
+    String url;
     private RecyclerView recyclerView;
     private Adapter adapter;
 
@@ -38,24 +40,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Bundle bundle = getIntent().getExtras();
-        String option = bundle.getString("Op");
-        String url;
+        try {
+            String option = bundle.getString("Op");
+            if (option.equalsIgnoreCase("Daily")) {
+                url = GitServiceDaily.Base_Url;
+                createRecyclerView(this);
+                createCall(createRetrofit(url), "Daily");
 
-        if (option.equalsIgnoreCase("Daily")) {
-            url = GitServiceDaily.Base_Url;
-            createRecyclerView(this);
-            createCall(createRetrofit(url), "Daily");
-
-        } else if ((option.equalsIgnoreCase("Weekly"))) {
-            url = GitServiceWeekly.Base_Url;
-            createRecyclerView(this);
-            createCall(createRetrofit(url), "Weekly");
-        } else {
-            url = GitServiceMonthly.Base_Url;
-            createRecyclerView(this);
-            createCall(createRetrofit(url), "Monthly");
+            } else if ((option.equalsIgnoreCase("Weekly"))) {
+                url = GitServiceWeekly.Base_Url;
+                createRecyclerView(this);
+                createCall(createRetrofit(url), "Weekly");
+            } else {
+                url = GitServiceMonthly.Base_Url;
+                createRecyclerView(this);
+                createCall(createRetrofit(url), "Monthly");
+            }
+            }
+            catch(Exception e){
+                Log.e(TagErro,"Exception error "+e.getMessage());
+            }
         }
-    }
 
     public Retrofit createRetrofit(String url) {
         Retrofit retrofit = new Retrofit.Builder()
@@ -84,8 +89,8 @@ public class MainActivity extends AppCompatActivity {
             call.enqueue(new Callback<List<Trending>>() {
                 @Override
                 public void onResponse(Call<List<Trending>> call, Response<List<Trending>> response) {
-                    if (!response.isSuccessful()) {
-
+                    if(!response.isSuccessful()) {
+                        Log.e(TagApi, "Api connection has failed ");
                     } else {
                         List<Trending> t = response.body();
                         adapter.adicionarLista(t);
@@ -94,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<List<Trending>> call, Throwable t) {
-                    Log.e(Tag, "Network Failure " + t.getMessage());
+                    Log.e(TagNet, "Network Failure " + t.getMessage());
                 }
             });
         } else if (gitServiceType.equalsIgnoreCase("Weekly")) {
@@ -103,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
             call.enqueue(new Callback<List<Trending>>() {
                 @Override
                 public void onResponse(Call<List<Trending>> call, Response<List<Trending>> response) {
-                    if (!response.isSuccessful()) {
-
+                    if(!response.isSuccessful()) {
+                        Log.e(TagApi, "Api connection has failed ");
                     } else {
                         List<Trending> t = response.body();
                         adapter.adicionarLista(t);
@@ -113,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<List<Trending>> call, Throwable t) {
-                    Log.e(Tag, "Network Failure " + t.getMessage());
+                    Log.e(TagNet, "Network Failure " + t.getMessage());
                 }
             });
         }else{
@@ -123,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<List<Trending>> call, Response<List<Trending>> response) {
                     if (!response.isSuccessful()) {
-
+                        Log.e(TagApi, "Api connection has failed ");
                     } else {
                         List<Trending> t = response.body();
                         adapter.adicionarLista(t);
@@ -132,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<List<Trending>> call, Throwable t) {
-                    Log.e(Tag, "Network Failure " + t.getMessage());
+                    Log.e(TagNet, "Network Failure " + t.getMessage());
                 }
             });
         }
